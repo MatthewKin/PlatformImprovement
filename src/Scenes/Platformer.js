@@ -70,7 +70,7 @@ class Platformer extends Phaser.Scene {
         this.bluePlatformLayer.setCollisionByProperty({ bluePlatform: false });
 
         GlobalData.scoreText = this.add.text(375, 225, 
-            'Score: 0 \nShip Pieces Collected: 0/3', {
+            'Score: 0 \nShip Pieces Collected: 0/3\nHealth: 3', {
             fontSize: '15px',
             fill: '#ffffff',
             fontFamily: 'Arial',
@@ -82,6 +82,7 @@ class Platformer extends Phaser.Scene {
         console.log("scoreText created:", GlobalData.scoreText);
         this.shipPieces = 0;
         GlobalData.score = 0;
+        this.playerHealth = 3;
 
         
 
@@ -153,7 +154,7 @@ class Platformer extends Phaser.Scene {
         this.coinLayer.removeTileAt(tile.x, tile.y);
         // Optional: play sound, increment score, animate, etc.
         GlobalData.score += 1;
-        GlobalData.scoreText.setText('Score: ' + GlobalData.score +  '\nShip Pieces Collected: ' + this.shipPieces + '/3');
+        GlobalData.scoreText.setText('Score: ' + GlobalData.score +  '\nShip Pieces Collected: ' + this.shipPieces + '/3' + '\nHealth: ' + this.playerHealth);
         console.log("coin collected");
         return false; // Return false to stop collision from happening again
     }
@@ -164,7 +165,7 @@ class Platformer extends Phaser.Scene {
         // Optional: play sound, increment score, animate, etc.
         this.shipPieces += 1;
         GlobalData.score += 10;
-        GlobalData.scoreText.setText('Score: ' + GlobalData.score +  '\nShip Pieces Collected: ' + this.shipPieces + '/3');
+        GlobalData.scoreText.setText('Score: ' + GlobalData.score +  '\nShip Pieces Collected: ' + this.shipPieces + '/3' + '\nHealth: ' + this.playerHealth);
         console.log("ship piece collected");
         if (this.shipPieces >= 3) {
             this.scene.start('EndScene'); // Switch to EndScene
@@ -269,6 +270,11 @@ class Platformer extends Phaser.Scene {
             my.sprite.player.setVelocity(0, 0);
             my.sprite.player.setAcceleration(0, 0);  
             my.sprite.player.setPosition(30, 200);
+            this.playerHealth -= 1;
+            GlobalData.scoreText.setText('Score: ' + GlobalData.score +  '\nShip Pieces Collected: ' + this.shipPieces + '/3' + '\nHealth: ' + this.playerHealth);
+            if (this.playerHealth <= 0) {
+                this.scene.start('EndScene');
+            }
         }
 
 
