@@ -31,7 +31,7 @@ let config = {
     },
     width: 1440,
     height: 900,
-    scene: [Load, Platformer]
+    scene: [Load, Platformer,EndScene]
 }
 
 var cursors;
@@ -39,3 +39,8 @@ const SCALE = 2.0;
 var my = {sprite: {}, text: {}, vfx: {}};
 
 const game = new Phaser.Game(config);
+
+let GlobalData = {
+    score: 0
+    // add other global data here
+};
